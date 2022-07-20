@@ -21,18 +21,17 @@ function QuestionItem({ question, onDelete, updateQuestion }) {
   }
 
   function changeAnswer(event){
-    const answer = event.defaultValue;
+    const correctIndex = parseInt(event.target.value)
+    console.log("answer changed", correctIndex);
     fetch(`http://localhost:4000/questions/${question.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: {
-        "correctIndex": parseInt(answer),
-      }
+      body: JSON.stringify({ correctIndex }),
     })
       .then((r) => r.json())
-      .then((newQuestion) => updateQuestion(newQuestion));
+      .then((updatedQuestions) => updateQuestion(updatedQuestions));
   }
 
   return (
